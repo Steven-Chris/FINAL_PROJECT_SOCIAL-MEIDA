@@ -1,0 +1,14 @@
+.App {
+  /* background-color: #f3f2ef; */
+  /* background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%); */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.app__body {
+  display: flex;
+  margin-top: 35px;
+  max-width: 1200px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
