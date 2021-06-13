@@ -14,8 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { useDispatch } from "react-redux";
-import { auth } from "../../firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, db } from "../../firebase/firebase";
 import { login } from "../../features/userSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,13 +48,15 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const userId = useSelector((state) => state.user.uid);
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
   const register = (e) => {
     e.preventDefault();
-    console.log(name, email, password);
     if (!name) {
       return alert("Please Enter Full name");
     }
@@ -62,11 +64,12 @@ export default function SignUp() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
-        console.log(userAuth);
         userAuth.user
-          .updateProfile({
-            displayName: name,
-            // photoURL: profilePic,
+          .updateProfile({ displayName: name })
+          .then(() => {
+            db.collection("users")
+              .doc(userAuth.user.displayName)
+              .set({ name, email, bio });
           })
           .then(() => {
             dispatch(
@@ -74,13 +77,20 @@ export default function SignUp() {
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: name,
-                // photoUrl: profilePic,
               })
             );
           });
       })
       .catch((err) => alert(err));
   };
+  db.collection("users")
+    .get()
+    .then((snapshot) => {
+      // console.log(snapshot.docs);
+      snapshot.docs.forEach((doc) => {
+        console.log(doc.data());
+      });
+    });
 
   /////////// ADD USER COLLECTION ON SIGNUP FEATURE///////////
   return (
@@ -110,6 +120,22 @@ export default function SignUp() {
                 fullWidth
                 id="name"
                 label="Name"
+                autoFocus
+              />
+            </Grid>
+
+            {/* ==== BIO ====== */}
+            <Grid item xs={12}>
+              <TextField
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                autoComplete="bio"
+                name="bio"
+                variant="outlined"
+                required
+                fullWidth
+                id="bio"
+                label="bio"
                 autoFocus
               />
             </Grid>
