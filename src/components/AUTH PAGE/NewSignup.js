@@ -81,6 +81,8 @@ export default function SignUp() {
       })
       .catch((err) => alert(err));
   };
+
+  /////////// ADD USER COLLECTION ON SIGNUP FEATURE///////////
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

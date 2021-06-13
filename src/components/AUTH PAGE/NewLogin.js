@@ -84,8 +84,6 @@ export default function SignIn() {
 
     setEmail("");
     setPassword("");
-
-    // console.log(error);
   };
 
   return (
