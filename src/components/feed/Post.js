@@ -34,7 +34,11 @@ const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
   return (
     <div ref={ref} className={classes.post}>
       <div className={classes.post__header}>
-        <Avatar>{name[0]}</Avatar>
+        <Avatar
+          src={
+            "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
+          }
+        ></Avatar>
         <div className={classes.post__info}>
           <h2>{name}</h2>
           <p>{description}</p>

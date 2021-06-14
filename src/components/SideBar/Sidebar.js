@@ -15,16 +15,15 @@ const Sidebar = () => {
           src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
           alt=""
         />
-        <Avatar className={classes.sidebar__avatar}>
-          {userDetails.displayName[0]}
-        </Avatar>
+        <Avatar
+          src={
+            "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
+          }
+          className={classes.sidebar__avatar}
+        ></Avatar>
         <h2>{userDetails.displayName}</h2>
         <h4>{userDetails.email}</h4>
-        {/* <p>
-          multiBillionaire💰💰💰
-          <br /> Engineer 🛠
-          <br /> Entrepreneur 🚀
-        </p> */}
+        <p>{userDetails.bio}</p>
       </div>
 
       {/* SIDEBAR_COUNTS */}

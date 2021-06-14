@@ -48,6 +48,7 @@ const Feed = () => {
 
     db.collection("posts").add({
       name: user.displayName,
+      uid: user.uid,
       description: user.email,
       message: input,
       photoUrl: user.photoUrl || "",
@@ -69,7 +70,7 @@ const Feed = () => {
       });
   }, []);
 
-  console.log(posts);
+  // console.log(posts);
 
   return (
     <div className={classes.feed}>

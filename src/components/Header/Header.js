@@ -68,7 +68,7 @@ const Header = () => {
           ))}
           <HeaderOptions
             onClick={logoutOfApp}
-            avatar="https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=800&q=70"
+            avatar="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
             title={userDetails ? userDetails.displayName : "Please Login"}
           />
         </div>

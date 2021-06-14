@@ -14,10 +14,8 @@ const HeaderOptions = ({ avatar, Icon, title, onClick }) => {
         <Avatar
           onClick={onClick}
           className={classes.headerOptions__icon}
-          src={userDetails?.photoUrl}
-        >
-          {userDetails?.displayName[0]}
-        </Avatar>
+          src={avatar}
+        ></Avatar>
       )}
       <h3 className={classes.headerOptions__title}>{title}</h3>
     </div>

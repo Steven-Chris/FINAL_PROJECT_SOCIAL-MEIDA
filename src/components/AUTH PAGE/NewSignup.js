@@ -59,7 +59,6 @@ export default function SignUp() {
     if (!name) {
       return alert("Please Enter Full name");
     }
-
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userAuth) => {
@@ -73,6 +72,7 @@ export default function SignUp() {
               name,
               email,
               bio,
+              uid: userAuth.user.uid,
             });
           })
           .then(() => {
@@ -81,12 +81,14 @@ export default function SignUp() {
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: name,
+                bio: bio,
               })
             );
           });
       })
       .catch((err) => alert(err));
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
