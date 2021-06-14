@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { useDispatch } from "react-redux";
-import { auth } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { login } from "../../features/userSlice";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +48,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -66,7 +67,13 @@ export default function SignUp() {
         userAuth.user
           .updateProfile({
             displayName: name,
-            // photoURL: profilePic,
+          })
+          .then(() => {
+            db.collection("users").doc(userAuth.user.uid).set({
+              name,
+              email,
+              bio,
+            });
           })
           .then(() => {
             dispatch(
@@ -74,7 +81,6 @@ export default function SignUp() {
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: name,
-                // photoUrl: profilePic,
               })
             );
           });
@@ -124,6 +130,21 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+              />
+            </Grid>
+
+            {/* ==== BIO ====== */}
+            <Grid item xs={12}>
+              <TextField
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                variant="outlined"
+                required
+                fullWidth
+                id="bio"
+                label="One line Bio"
+                name="bio"
+                autoComplete="bio"
               />
             </Grid>
 
