@@ -34,7 +34,7 @@ const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
   return (
     <div ref={ref} className={classes.post}>
       <div className={classes.post__header}>
-        <Avatar src={photoUrl}>{name[0]}</Avatar>
+        <Avatar>{name[0]}</Avatar>
         <div className={classes.post__info}>
           <h2>{name}</h2>
           <p>{description}</p>

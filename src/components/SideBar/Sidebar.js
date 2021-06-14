@@ -15,7 +15,7 @@ const Sidebar = () => {
           src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
           alt=""
         />
-        <Avatar src={userDetails.photoUrl} className={classes.sidebar__avatar}>
+        <Avatar className={classes.sidebar__avatar}>
           {userDetails.email[0]}
         </Avatar>
         <h2>{userDetails.displayName}</h2>

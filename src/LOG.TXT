@@ -1,0 +1,1 @@
+REMOVE PHOTO URL from Post.js and SideBar.js
