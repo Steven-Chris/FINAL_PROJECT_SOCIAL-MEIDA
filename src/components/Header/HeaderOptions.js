@@ -16,7 +16,7 @@ const HeaderOptions = ({ avatar, Icon, title, onClick }) => {
           className={classes.headerOptions__icon}
           src={userDetails?.photoUrl}
         >
-          {userDetails?.email[0]}
+          {userDetails?.displayName[0]}
         </Avatar>
       )}
       <h3 className={classes.headerOptions__title}>{title}</h3>

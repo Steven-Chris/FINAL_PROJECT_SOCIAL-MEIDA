@@ -16,7 +16,7 @@ const Sidebar = () => {
           alt=""
         />
         <Avatar className={classes.sidebar__avatar}>
-          {userDetails.email[0]}
+          {userDetails.displayName[0]}
         </Avatar>
         <h2>{userDetails.displayName}</h2>
         <h4>{userDetails.email}</h4>

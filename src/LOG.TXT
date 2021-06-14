@@ -1,1 +1,2 @@
 REMOVE PHOTO URL from Post.js and SideBar.js
+CHANGE AVATAR ICON NAME TO NAME FROM EMAIL in SideBar.js and HeaderOptions.js
