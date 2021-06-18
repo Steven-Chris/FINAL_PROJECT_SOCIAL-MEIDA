@@ -59,7 +59,7 @@ const Header = () => {
           ))} */}
           <HeaderOptions
             onClick={logoutOfApp}
-            avatar="s"
+            avatar={userDetails.photoUrl}
             title={userDetails ? userDetails.displayName : "Please Login"}
           />
         </div>

@@ -76,13 +76,14 @@ export default function SignIn() {
           .doc(userAuth.user.uid)
           .get()
           .then((user) => {
-            console.log(user.data().profilePic);
+            console.log(user.data().bio);
             return dispatch(
               login({
                 email: userAuth.user.email,
                 uid: userAuth.user.uid,
                 displayName: userAuth.user.displayName,
                 photoUrl: user.data().profilePic,
+                bio: user.data().bio,
               })
             );
           })

@@ -13,44 +13,12 @@ import { Route, Switch } from "react-router-dom";
 
 function App() {
   const authState = useSelector((state) => state.user.isAuthenticated);
-  const [bio, setBio] = useState("");
-  // const userDetails = useSelector(userAuth);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        //logged in user
+  // useEffect(() => {
+  // persist login
+  // }, [])
 
-        db.collection("users")
-          .where("uid", "==", userAuth.uid)
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              setBio(doc.data().bio);
-            });
-          })
-          .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
-
-        dispatch(
-          login({
-            email: userAuth.email,
-            uid: userAuth.uid,
-            displayName: userAuth.displayName,
-            photoUrl: userAuth.photoURL,
-            bio: bio,
-          })
-        );
-      } else {
-        //loggedOut
-        dispatch(logout());
-      }
-    });
-  });
-
-  // console.log(authState);
   return (
     <div className="App">
       <Header />
