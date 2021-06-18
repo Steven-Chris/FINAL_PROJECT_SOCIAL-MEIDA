@@ -13,10 +13,13 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import { useDispatch } from "react-redux";
 import { auth, db } from "../../firebase/firebase";
 import { login } from "../../features/userSlice";
+
+import "./NewSignup.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +44,28 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
+  },
+  buttonHide: {
+    display: "none",
+  },
+  uploadButton: {
+    display: "flex",
+    border: "1px solid #c1c1c1",
+    borderRadius: "5px",
+    color: "RGB(114, 114, 114)",
+    padding: "15px",
+    transition: "all .3s",
+    "&:hover": {
+      backgroundImage: "linear-gradient(to right, #a18cd1 0%, #fbc2eb 100%)",
+      color: "white",
+    },
+  },
+  photoIcon: {
+    marginRight: "5px",
+  },
+  proLabel: {
+    fontSize: "16px",
+    fontWeight: "400",
   },
 }));
 
@@ -148,6 +173,24 @@ export default function SignUp() {
                 name="bio"
                 autoComplete="bio"
               />
+            </Grid>
+
+            {/* ==== DP ====== */}
+            <Grid item xs={12}>
+              <TextField
+                className={classes.buttonHide}
+                type="file"
+                variant="outlined"
+                required
+                fullWidth
+                id="dp"
+                name="dp"
+                autoComplete="dp"
+              />
+              <label className={classes.uploadButton} htmlFor="dp">
+                <PhotoCameraIcon className={classes.photoIcon} />
+                <p className={classes.proLabel}>Profile Picture</p>
+              </label>
             </Grid>
 
             {/* ==== PASSWORD ====== */}

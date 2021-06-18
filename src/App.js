@@ -50,13 +50,11 @@ function App() {
     });
   });
 
-  console.log(authState);
+  // console.log(authState);
   return (
     <div className="App">
       <Header />
-      {/* {!authState && <Login />} */}
-      {/* {!authState && <NewSignup />} */}
-      {/* {!authState && <NewLogin />} */}
+
       <Switch>
         {!authState && <Route path="/" exact component={NewSignup} />}
         {!authState && <Route path="/login" exact component={NewLogin} />}

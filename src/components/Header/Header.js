@@ -63,9 +63,9 @@ const Header = () => {
 
       {authState && (
         <div className={classes.header__right}>
-          {HeaderOptionsData.map((data) => (
+          {/* {HeaderOptionsData.map((data) => (
             <HeaderOptions Icon={data.icon} title={data.title} />
-          ))}
+          ))} */}
           <HeaderOptions
             onClick={logoutOfApp}
             avatar="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
