@@ -17,7 +17,6 @@ const Sidebar = () => {
         />
         <Avatar
           src={userDetails.photoUrl}
-          // "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
           className={classes.sidebar__avatar}
         ></Avatar>
         <h2>{userDetails.displayName}</h2>

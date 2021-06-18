@@ -49,16 +49,7 @@ const Header = () => {
   return (
     <div className={classes.header}>
       <div className={classes.header__left}>
-        {/* <img
-          src="https://www.flaticon.com/svg/static/icons/svg/174/174857.svg"
-          alt=""
-        /> */}
         <h2>Twittagram</h2>
-        {/* 
-        <div className={classes.header__search}>
-          <SearchIcon />
-          <input placeholder="search" type="text" />
-        </div> */}
       </div>
 
       {authState && (
@@ -68,7 +59,7 @@ const Header = () => {
           ))} */}
           <HeaderOptions
             onClick={logoutOfApp}
-            avatar={userDetails.photoUrl}
+            avatar="s"
             title={userDetails ? userDetails.displayName : "Please Login"}
           />
         </div>

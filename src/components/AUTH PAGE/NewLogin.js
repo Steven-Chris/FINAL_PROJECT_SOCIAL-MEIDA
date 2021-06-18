@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import ErrorAlert from "./ErrorAlert";
 
 import { useDispatch } from "react-redux";
-import { auth } from "../../firebase/firebase";
+import { auth, db } from "../../firebase/firebase";
 import { login } from "../../features/userSlice";
 
 // function Copyright() {
@@ -64,28 +64,33 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
-
+  const [dp, setDp] = useState(null);
   const loginToApp = (e) => {
     e.preventDefault();
 
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userAuth) =>
-        dispatch(
-          login({
-            email: userAuth.user.email,
-            uid: userAuth.user.uid,
-            displayName: userAuth.user.displayName,
-            profileUrl: userAuth.user.photoURL,
+        db
+          .collection("users")
+          .doc(userAuth.user.uid)
+          .get()
+          .then((user) => {
+            console.log(user.data().profilePic);
+            return dispatch(
+              login({
+                email: userAuth.user.email,
+                uid: userAuth.user.uid,
+                displayName: userAuth.user.displayName,
+                photoUrl: user.data().profilePic,
+              })
+            );
           })
-        )
       )
       .catch((error) => setIsError(true));
 
     setEmail("");
     setPassword("");
-
-    // console.log(error);
   };
 
   return (
