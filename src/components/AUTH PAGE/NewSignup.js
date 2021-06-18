@@ -15,8 +15,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
-import { useDispatch } from "react-redux";
-import { auth, db } from "../../firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, db, storage } from "../../firebase/firebase";
 import { login } from "../../features/userSlice";
 
 import "./NewSignup.css";
@@ -60,12 +60,11 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
-  photoIcon: {
-    marginRight: "5px",
-  },
+
   proLabel: {
     fontSize: "16px",
     fontWeight: "400",
+    marginLeft: "5px",
   },
 }));
 
@@ -74,44 +73,71 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
+  const [image, setImage] = useState(null);
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  const register = (e) => {
+  const getImage = (e) => {
+    const selectedImage = e.target.files[0];
+
+    console.log(selectedImage);
+
+    const types = ["image/png", "image/jpeg"];
+
+    if (selectedImage && types.includes(selectedImage.type)) {
+      setImage(selectedImage);
+    } else {
+      console.log(`File not supported`);
+    }
+  };
+
+  const register = async (e) => {
     e.preventDefault();
     console.log(name, email, password);
     if (!name) {
       return alert("Please Enter Full name");
     }
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userAuth) => {
-        console.log(userAuth);
-        userAuth.user
-          .updateProfile({
-            displayName: name,
-          })
-          .then(() => {
-            db.collection("users").doc(userAuth.user.uid).set({
-              name,
-              email,
-              bio,
-              uid: userAuth.user.uid,
-            });
-          })
-          .then(() => {
-            dispatch(
-              login({
-                email: userAuth.user.email,
-                uid: userAuth.user.uid,
-                displayName: name,
-                bio: bio,
-              })
-            );
+    auth.createUserWithEmailAndPassword(email, password).then((userAuth) => {
+      console.log(userAuth);
+      userAuth.user
+        .updateProfile({
+          displayName: name,
+        })
+        .then(() => {
+          db.collection("users").doc(userAuth.user.uid).set({
+            name,
+            email,
+            bio,
+            uid: userAuth.user.uid,
           });
-      })
-      .catch((err) => alert(err));
+        })
+
+        .then(() => {
+          const storageRef = storage.ref();
+          const imageRef = storageRef.child(image.name);
+
+          imageRef.put(image).then(() => {
+            imageRef.getDownloadURL().then((link) => {
+              console.log(link);
+              db.collection("users")
+                .doc(userAuth.user.uid)
+                .update({ profilePic: link });
+
+              dispatch(
+                login({
+                  email: userAuth.user.email,
+                  uid: userAuth.user.uid,
+                  displayName: name,
+                  bio: bio,
+                  photoUrl: link,
+                })
+              );
+            });
+          });
+        });
+    });
   };
 
   return (
@@ -186,10 +212,12 @@ export default function SignUp() {
                 id="dp"
                 name="dp"
                 autoComplete="dp"
+                onChange={getImage}
               />
               <label className={classes.uploadButton} htmlFor="dp">
                 <PhotoCameraIcon className={classes.photoIcon} />
-                <p className={classes.proLabel}>Profile Picture</p>
+                {!image && <p className={classes.proLabel}>Profile Picture</p>}
+                {image && <p className={classes.proLabel}>{image.name}</p>}
               </label>
             </Grid>
 

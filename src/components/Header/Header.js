@@ -68,7 +68,7 @@ const Header = () => {
           ))} */}
           <HeaderOptions
             onClick={logoutOfApp}
-            avatar="https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
+            avatar={userDetails.photoUrl}
             title={userDetails ? userDetails.displayName : "Please Login"}
           />
         </div>
