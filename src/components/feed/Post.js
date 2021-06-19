@@ -1,9 +1,10 @@
 import { Avatar } from "@material-ui/core";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import InputOptions from "../feed/InputOptions";
 import classes from "./Post.module.css";
 
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatOutlinedIcon from "@material-ui/icons/Chat";
 // import ShareOutlinedIcon from "@material-ui/icons/Share";
 // import SendOutlinedIcon from "@material-ui/icons/Send";
@@ -11,14 +12,14 @@ import ChatOutlinedIcon from "@material-ui/icons/Chat";
 const buttonData = [
   {
     title: "Like",
-    icon: ThumbUpAltOutlinedIcon,
+    icon: FavoriteIcon,
     color: "gray",
   },
-  {
-    title: "Comment",
-    icon: ChatOutlinedIcon,
-    color: "gray",
-  },
+  // {
+  //   title: "Comment",
+  //   icon: ChatOutlinedIcon,
+  //   color: "gray",
+  // },
   // {
   //   title: "Share",
   //   icon: ShareOutlinedIcon,
@@ -31,6 +32,11 @@ const buttonData = [
   // },
 ];
 const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
+  const [likeColor, setLikeColor] = useState("gray");
+
+  const likePost = () => {
+    setLikeColor("red");
+  };
   return (
     <div ref={ref} className={classes.post}>
       <div className={classes.post__header}>
@@ -47,9 +53,10 @@ const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
       <div className={classes.post__buttons}>
         {buttonData.map((data) => (
           <InputOptions
+            onClick={likePost}
             Icon={data.icon}
             title={data.title}
-            color={data.color}
+            color={likeColor}
           />
         ))}
       </div>
