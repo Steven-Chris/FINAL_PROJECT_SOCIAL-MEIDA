@@ -25,7 +25,7 @@ const Sidebar = () => {
       </div>
 
       {/* SIDEBAR_COUNTS */}
-      <div className={classes.sidebar__stats}>
+      {/* <div className={classes.sidebar__stats}>
         <div className={classes.sidebar__stat}>
           <p>Number of posts of post</p>
           <p className={classes.sidebar__statNumber}>50</p>
@@ -34,7 +34,7 @@ const Sidebar = () => {
           <p>Number of likes</p>
           <p className={classes.sidebar__statNumber}>2,540</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
