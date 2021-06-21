@@ -70,8 +70,6 @@ const Feed = () => {
       });
   }, []);
 
-  // console.log(posts);
-
   return (
     <div className={classes.feed}>
       <div className={classes.feed__inputContainer}>
@@ -100,18 +98,22 @@ const Feed = () => {
         </div> */}
       </div>
       <FlipMove>
-        {posts.map(({ id, data: { name, description, message, photoUrl } }) => {
-          return (
-            // <h1>post</h1>
-            <Post
-              key={id}
-              name={name}
-              description={description}
-              message={message}
-              photoUrl={photoUrl}
-            />
-          );
-        })}
+        {posts.map(
+          ({ id, data: { name, description, message, photoUrl, likes } }) => {
+            return (
+              // <h1>post</h1>
+              <Post
+                key={id}
+                id={id}
+                name={name}
+                description={description}
+                message={message}
+                photoUrl={photoUrl}
+                likesCount={likes}
+              />
+            );
+          }
+        )}
       </FlipMove>
     </div>
   );

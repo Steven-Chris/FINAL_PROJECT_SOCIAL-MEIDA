@@ -27,3 +27,9 @@
   display: flex;
   justify-content: flex-start;
 }
+.post__buttons > p {
+  display: flex;
+  /* background-color: rgb(255, 0, 0); */
+  align-items: center;
+  padding-top: 15px;
+}

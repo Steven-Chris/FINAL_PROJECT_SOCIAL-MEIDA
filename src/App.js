@@ -15,10 +15,6 @@ function App() {
   const authState = useSelector((state) => state.user.isAuthenticated);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  // persist login
-  // }, [])
-
   return (
     <div className="App">
       <Header />

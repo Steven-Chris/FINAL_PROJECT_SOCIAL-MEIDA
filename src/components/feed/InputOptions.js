@@ -2,10 +2,10 @@ import React from "react";
 
 import classes from "./InputOptions.module.css";
 
-const InputOptions = ({ Icon, title, color, onClick }) => {
+const InputOptions = ({ Icon, title, likedColor, onClick }) => {
   return (
     <div className={classes.inputOptions} onClick={onClick}>
-      <Icon style={{ color: color }} />
+      <Icon style={{ color: likedColor ? "red" : "gray" }} />
       <h4>{title}</h4>
     </div>
   );
