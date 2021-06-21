@@ -20,16 +20,6 @@ const buttonData = [
   //   icon: ChatOutlinedIcon,
   //   color: "gray",
   // },
-  // {
-  //   title: "Share",
-  //   icon: ShareOutlinedIcon,
-  //   color: "gray",
-  // },
-  // {
-  //   title: "Send",
-  //   icon: SendOutlinedIcon,
-  //   color: "gray",
-  // },
 ];
 const Post = forwardRef(({ name, description, message, photoUrl }, ref) => {
   const [likeColor, setLikeColor] = useState("gray");
