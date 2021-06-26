@@ -32,7 +32,7 @@ const Post = forwardRef(
     };
     console.log(likesCount);
 
-    //setting the like count
+    // setting the like count
     useEffect(() => {
       if (isLiked) {
         setLikeCount(likeCount - 1);
@@ -41,7 +41,7 @@ const Post = forwardRef(
       }
     }, [isLiked]);
 
-    //sending like count to db
+    // sending like count to db
     useEffect(() => {
       db.collection("posts")
         .doc(id)

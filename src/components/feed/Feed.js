@@ -51,6 +51,8 @@ const Feed = () => {
       uid: user.uid,
       description: user.email,
       message: input,
+      likes: 0,
+      likedUsersId: [],
       photoUrl: user.photoUrl || "",
       timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
