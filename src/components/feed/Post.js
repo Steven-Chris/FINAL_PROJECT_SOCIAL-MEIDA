@@ -9,8 +9,6 @@ import ChatOutlinedIcon from "@material-ui/icons/Chat";
 import { db } from "../../firebase/firebase";
 import firebase from "firebase";
 import { useSelector } from "react-redux";
-// import ShareOutlinedIcon from "@material-ui/icons/Share";
-// import SendOutlinedIcon from "@material-ui/icons/Send";
 
 const buttonData = [
   {
@@ -24,18 +22,23 @@ const buttonData = [
   //   color: "gray",
   // },
 ];
+
 const Post = forwardRef(
   ({ id, likesCount, name, description, message, photoUrl }, ref) => {
     const [likedList, setLikedList] = useState([]);
     const increment = firebase.firestore.FieldValue.increment(1);
     const decrement = firebase.firestore.FieldValue.increment(-1);
+    console.log("dont do it");
 
     const userDet = useSelector((state) => state.user.user);
-    db.collection("posts")
-      .doc(id)
-      .onSnapshot((snap) => {
-        setLikedList(snap.data().likedUsersId); //getting liked user array
-      });
+
+    useEffect(() => {
+      db.collection("posts")
+        .doc(id)
+        .onSnapshot((snap) => {
+          setLikedList(snap.data()?.likedUsersId); //getting liked user array
+        });
+    }, []);
 
     const likePost = () => {
       if (!likedList.includes(userDet.uid)) {
