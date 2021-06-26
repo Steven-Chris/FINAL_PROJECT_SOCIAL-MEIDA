@@ -3,5 +3,22 @@ CHANGE AVATAR ICON NAME TO NAME FROM EMAIL in SideBar.js and HeaderOptions.js
 ADDED BIO FIELD IN FORM AND USER COLLECTION
 RETRIEVE BIO FROM FIRESTORE AND DISPLAY IN PROFILE
 
+    // // setting the like count
+    // useEffect(() => {
+    //   if (isLiked) {
+    //     setLikeCount(likeCount - 1);
+    //   } else {
+    //     setLikeCount(likeCount + 1);
+    //   }
+    // }, [isLiked]);
 
+    // // sending like count to db
+    // useEffect(() => {
+    //   db.collection("posts")
+    //     .doc(id)
+    //     .update({ likes: likeCount })
+    //     .catch((error) => {
+    //       console.log("Error getting document:", error);
+    //     });
+    // }, [isLiked]);
 

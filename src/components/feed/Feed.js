@@ -59,6 +59,7 @@ const Feed = () => {
 
     setInput("");
   };
+
   useEffect(() => {
     db.collection("posts")
       .orderBy("timeStamp", "desc")

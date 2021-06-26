@@ -7,6 +7,8 @@ import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ChatOutlinedIcon from "@material-ui/icons/Chat";
 import { db } from "../../firebase/firebase";
+import firebase from "firebase";
+import { useSelector } from "react-redux";
 // import ShareOutlinedIcon from "@material-ui/icons/Share";
 // import SendOutlinedIcon from "@material-ui/icons/Send";
 
@@ -24,32 +26,42 @@ const buttonData = [
 ];
 const Post = forwardRef(
   ({ id, likesCount, name, description, message, photoUrl }, ref) => {
-    const [isLiked, setIsLiked] = useState(false);
-    let [likeCount, setLikeCount] = useState(0);
+    const [likedList, setLikedList] = useState([]);
+    const increment = firebase.firestore.FieldValue.increment(1);
+    const decrement = firebase.firestore.FieldValue.increment(-1);
+
+    const userDet = useSelector((state) => state.user.user);
+    db.collection("posts")
+      .doc(id)
+      .onSnapshot((snap) => {
+        setLikedList(snap.data().likedUsersId); //getting liked user array
+      });
 
     const likePost = () => {
-      setIsLiked(!isLiked);
-    };
-    console.log(likesCount);
-
-    // setting the like count
-    useEffect(() => {
-      if (isLiked) {
-        setLikeCount(likeCount - 1);
+      if (!likedList.includes(userDet.uid)) {
+        db.collection("posts")
+          .doc(id)
+          .update({
+            likes: increment,
+            likedUsersId: [...likedList, userDet.uid], //updating the post document
+          });
       } else {
-        setLikeCount(likeCount + 1);
-      }
-    }, [isLiked]);
+        //find index of uid and remove from the likedList
+        const index = likedList.indexOf(userDet.uid);
+        if (index > -1) {
+          likedList.splice(index, 1);
+        }
 
-    // sending like count to db
-    useEffect(() => {
-      db.collection("posts")
-        .doc(id)
-        .update({ likes: likeCount })
-        .catch((error) => {
-          console.log("Error getting document:", error);
-        });
-    }, [isLiked]);
+        //update db
+        db.collection("posts")
+          .doc(id)
+          .update({
+            likes: decrement,
+            likedUsersId: [...likedList], //updating the post document
+          });
+      }
+      console.log(likesCount);
+    };
 
     return (
       <div ref={ref} className={classes.post}>
@@ -70,7 +82,7 @@ const Post = forwardRef(
               onClick={likePost}
               Icon={data.icon}
               title={data.title}
-              likedColor={isLiked}
+              likedColor={likesCount}
             />
           ))}
           {likesCount > 0 && <p>{likesCount}</p>}
