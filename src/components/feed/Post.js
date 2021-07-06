@@ -28,7 +28,6 @@ const Post = forwardRef(
     const [likedList, setLikedList] = useState([]);
     const increment = firebase.firestore.FieldValue.increment(1);
     const decrement = firebase.firestore.FieldValue.increment(-1);
-    console.log("dont do it");
 
     const userDet = useSelector((state) => state.user.user);
 
@@ -38,7 +37,7 @@ const Post = forwardRef(
         .onSnapshot((snap) => {
           setLikedList(snap.data()?.likedUsersId); //getting liked user array
         });
-    }, []);
+    }, [id]);
 
     const likePost = () => {
       if (!likedList.includes(userDet.uid)) {
@@ -63,7 +62,7 @@ const Post = forwardRef(
             likedUsersId: [...likedList], //updating the post document
           });
       }
-      console.log(likesCount);
+      // console.log(likesCount);
     };
 
     return (
