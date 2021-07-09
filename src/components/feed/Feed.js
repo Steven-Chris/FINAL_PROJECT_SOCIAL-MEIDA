@@ -49,7 +49,7 @@ const Feed = () => {
     db.collection("posts").add({
       name: user.displayName,
       uid: user.uid,
-      description: user.email,
+      userHandle: user.email,
       message: input,
       likes: 0,
       likedUsersId: [],
@@ -102,14 +102,14 @@ const Feed = () => {
       </div>
       <FlipMove>
         {posts.map(
-          ({ id, data: { name, description, message, photoUrl, likes } }) => {
+          ({ id, data: { name, userHandle, message, photoUrl, likes } }) => {
             return (
               // <h1>post</h1>
               <Post
                 key={id}
                 id={id}
                 name={name}
-                description={description}
+                description={userHandle}
                 message={message}
                 photoUrl={photoUrl}
                 likesCount={likes}

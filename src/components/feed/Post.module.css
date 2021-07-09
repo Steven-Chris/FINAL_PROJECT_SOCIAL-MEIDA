@@ -8,6 +8,7 @@
 .post__header {
   display: flex;
   margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .post__info {
@@ -32,4 +33,14 @@
   /* background-color: rgb(255, 0, 0); */
   align-items: center;
   padding-top: 15px;
+}
+.deleteButton {
+  cursor: pointer;
+}
+.deleteButton:hover {
+  color: red;
+}
+.leftgroup {
+  /* background-color: green; */
+  display: flex;
 }

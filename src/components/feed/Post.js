@@ -3,8 +3,9 @@ import React, { forwardRef, useEffect, useState } from "react";
 import InputOptions from "../feed/InputOptions";
 import classes from "./Post.module.css";
 
-import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+// import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import ChatOutlinedIcon from "@material-ui/icons/Chat";
 import { db } from "../../firebase/firebase";
 import firebase from "firebase";
@@ -28,6 +29,7 @@ const Post = forwardRef(
     const [likedList, setLikedList] = useState([]);
     const increment = firebase.firestore.FieldValue.increment(1);
     const decrement = firebase.firestore.FieldValue.increment(-1);
+    const [userPostsId, setUserPostsId] = useState([]);
 
     const userDet = useSelector((state) => state.user.user);
 
@@ -36,6 +38,14 @@ const Post = forwardRef(
         .doc(id)
         .onSnapshot((snap) => {
           setLikedList(snap.data()?.likedUsersId); //getting liked user array
+        });
+
+      db.collection("posts")
+        .where("uid", "==", userDet.uid)
+        .onSnapshot((snap) => {
+          snap.forEach((doc) => {
+            setUserPostsId((prev) => [...prev, doc.id]);
+          });
         });
     }, [id]);
 
@@ -65,14 +75,25 @@ const Post = forwardRef(
       // console.log(likesCount);
     };
 
+    const deletePost = () => {
+      db.collection("posts").doc(id).delete();
+    };
     return (
       <div ref={ref} className={classes.post}>
         <div className={classes.post__header}>
-          <Avatar src={photoUrl}></Avatar>
-          <div className={classes.post__info}>
-            <h2>{name}</h2>
-            <p>{description}</p>
+          <div className={classes.leftgroup}>
+            <Avatar src={photoUrl}></Avatar>
+            <div className={classes.post__info}>
+              <h2>{name}</h2>
+              <p>{description}</p>
+            </div>
           </div>
+          {userPostsId.includes(id) && (
+            <HighlightOffIcon
+              className={classes.deleteButton}
+              onClick={deletePost}
+            />
+          )}
         </div>
         <div className={classes.post__body}>
           <p>{message}</p>
