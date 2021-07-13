@@ -47,7 +47,7 @@ const Post = forwardRef(
             setUserPostsId((prev) => [...prev, doc.id]);
           });
         });
-    }, [id]);
+    }, [id, userDet.uid]);
 
     const likePost = () => {
       if (!likedList.includes(userDet.uid)) {
@@ -72,7 +72,6 @@ const Post = forwardRef(
             likedUsersId: [...likedList], //updating the post document
           });
       }
-      // console.log(likesCount);
     };
 
     const deletePost = () => {
